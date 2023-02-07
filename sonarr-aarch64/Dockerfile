@@ -1,14 +1,18 @@
-FROM superbfg7/mono-armv7h
+FROM superbfg7/mono-aarch6
+
+ENV pkgver=3.0.9.1549
+ENV pkg="Sonarr.main.${pkgver}.linux.tar.gz"
+ENV source="https://download.sonarr.tv/v3/main/${pkgver}/${pkg}"
 
 ARG UID
 ARG GID
 
-RUN	pacmaster.sh -Syu gzip awk libmediainfo mono && \
-		wget -O /NzbDrone.master.tar.gz https://download.sonarr.tv/v2/master/mono/NzbDrone.master.tar.gz && \
-		tar xzfv NzbDrone.master.tar.gz && \
+RUN	pacmaster.sh -Syu --noconfirm wget && wget "${source}" && \
+		tar xzfv "${pkg}" && \
+		rm -rf "/Sonarr/Sonarr.Update" && \
 		groupadd -r -o -g $GID sonarr && \
 		useradd -r -o -u $UID -g sonarr -s /bin/false sonarr && \
-		rm -f /NzbDrone.master.tar.gz
+		rm -f "${pkg}"
 
 USER $UID
 
@@ -16,4 +20,4 @@ USER $UID
 VOLUME /config /data
 EXPOSE 8989
 
-CMD ["/usr/bin/mono", "/NzbDrone/NzbDrone.exe", "-nobrowser", "-data=/config"]
+CMD ["/usr/bin/mono", "/Sonarr/Sonarr.exe", "-nobrowser", "-data=/config"]
