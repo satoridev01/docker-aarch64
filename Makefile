@@ -1,11 +1,11 @@
-.PHONY: archlinux-armv7h nzbget-armv7h samba-armv7h
-BASE = archlinux-armv7h
-MONO = mono-armv7h
+.PHONY: archlinux-aarch64 nzbget-aarch64 samba-aarch64
+BASE = archlinux-aarch64
+MONO = mono-aarch64
 BUILD_MODULES = $(BASE) $(MONO) $(MODULES)
 RESTART_MODULES = $(MODULES)
 MODULES = $(BASE_MODULES) $(MONO_MODULES)
-MONO_MODULES = nzbget-armv7h samba-armv7h
-BASE_MODULES = radarr-armv7h sonarr-armv7h
+MONO_MODULES = nzbget-aarch64 samba-aarch64
+BASE_MODULES = radarr-aarch64 sonarr-aarch64
 PUSH_MODULES = $(BASE)-minimal $(MONO) $(MODULES)
 
 DOCKER_USER = superbfg7
@@ -13,7 +13,7 @@ DOCKER_USER = superbfg7
 all: $(BUILD_MODULES)
 
 clean:
-	$(MAKE) -C archlinux-armv7h clean
+	$(MAKE) -C archlinux-aarch64 clean
 
 restart:
 	for i in $(RESTART_MODULES); do \
