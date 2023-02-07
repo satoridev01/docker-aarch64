@@ -1,15 +1,18 @@
-FROM superbfg7/mono-armv7h
+FROM superbfg7/mono-aarch6
+
+ENV pkgver=4.3.2.6857
+ENV pkg="Radarr.master.${pkgver}.linux-core-arm64.tar.gz"
+ENV source="https://github.com/Radarr/Radarr/releases/download/v${pkgver}/${pkg}"
 
 ARG UID
 ARG GID
 
-RUN	pacmaster.sh -Syu && \
-		wget -O /radarr.tar.gz $( wget -O - https://api.github.com/repos/Radarr/Radarr/releases | grep linux.tar.gz | grep browser_download_url | head -1 | cut -d \" -f 4 ) && \
-		tar xzfv radarr.tar.gz && \
+RUN	pacmaster.sh -Syu --noconfirm wget && wget "${source}" && \
+		tar xzfv "${pkg}" && \
+		rm -rf "/Radarr/Radarr.Update" && \
 		groupadd -r -o -g $GID radarr && \
 		useradd -r -o -u $UID -g radarr -s /bin/false radarr && \
-		chown -R radarr.radarr /Radarr && \
-		rm -f /radarr.tar.gz
+		rm -f "${pkg}"
 
 USER $UID
 
@@ -17,4 +20,4 @@ USER $UID
 VOLUME /config /data
 EXPOSE 7878
 
-CMD ["/usr/bin/mono", "/Radarr/Radarr.exe", "-nobrowser", "-data=/config"]
+CMD ["/Radarr/Radarr", "-nobrowser", "-data=/config"]
