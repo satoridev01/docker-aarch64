@@ -1,11 +1,10 @@
-FROM superbfg7/archlinux-armv7h-minimal
+FROM superbfg7/archlinux-aarch64-minimal
 
 ARG UID
 ARG GID
 
-RUN pacmaster.sh -Syu nzbget unrar unzip p7zip git && \
+RUN pacmaster.sh -Syu nzbget unrar unzip p7zip && \
 		mkdir /app/ && \
-		pacmaster.sh -R git && \
 		groupadd -r -o -g $GID nzbget && \
 		useradd -r -o -u $UID -g nzbget -s /bin/false nzbget && \
 		chown -R $UID:$GID /app
