@@ -1,3 +1,5 @@
+PKGVER=$(shell cat Dockerfile | grep pkgver= | sed -e 's/.*=//')
+
 all: radarr-aarch64
 
 radarr-aarch64: build tag
@@ -17,7 +19,7 @@ force-build:
 		--build-arg "GID=`id -g kodi`" .
 
 tag: build
-	sudo docker tag superbfg7/radarr-aarch64 superbfg7/radarr-aarch64:`date +%F`
+	sudo docker tag superbfg7/radarr-aarch64 superbfg7/radarr-aarch64:${PKGVER}
 
 create:
 	sudo docker rename radarr radarr_old

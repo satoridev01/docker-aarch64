@@ -1,3 +1,5 @@
+PKGVER=$(shell cat Dockerfile | grep pkgver= | sed -e 's/.*=//')
+
 all: sonarr-aarch64
 
 sonarr-aarch64: build tag
@@ -17,7 +19,7 @@ force-build:
 		--build-arg "GID=`id -g kodi`" .
 
 tag: build
-	sudo docker tag superbfg7/sonarr-aarch64 superbfg7/sonarr-aarch64:`date +%F`
+	sudo docker tag superbfg7/sonarr-aarch64 superbfg7/sonarr-aarch64:${PKGVER}
 
 create:
 	sudo docker rename sonarr sonarr_old
