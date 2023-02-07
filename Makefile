@@ -4,8 +4,8 @@ MONO = mono-aarch64
 BUILD_MODULES = $(BASE) $(MONO) $(MODULES)
 RESTART_MODULES = $(MODULES)
 MODULES = $(BASE_MODULES) $(MONO_MODULES)
-MONO_MODULES = nzbget-aarch64 samba-aarch64
-BASE_MODULES = radarr-aarch64 sonarr-aarch64
+MONO_MODULES = radarr-aarch64 sonarr-aarch64
+BASE_MODULES = nzbget-aarch64 samba-aarch64
 PUSH_MODULES = $(BASE)-minimal $(MONO) $(MODULES)
 
 DOCKER_USER = superbfg7

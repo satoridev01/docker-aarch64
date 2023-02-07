@@ -7,7 +7,7 @@ ENV source="https://github.com/Radarr/Radarr/releases/download/v${pkgver}/${pkg}
 ARG UID
 ARG GID
 
-RUN	pacmaster.sh -Syu --noconfirm wget && wget "${source}" && \
+RUN	wget "${source}" && \
 		tar xzfv "${pkg}" && \
 		rm -rf "/Radarr/Radarr.Update" && \
 		groupadd -r -o -g $GID radarr && \
